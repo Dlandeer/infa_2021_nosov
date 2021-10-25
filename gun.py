@@ -1,3 +1,4 @@
+from os import name
 from random import randrange as rnd, choice
 import tkinter as tk
 import math
@@ -10,7 +11,12 @@ root = tk.Tk()
 fr = tk.Frame(root)
 root.geometry('800x600')
 canv = tk.Canvas(root, bg='white')
-canv.pack(fill=tk.BOTH, expand=1)
+e = tk.Entry(width=20)
+beg = tk.Label(text="Введите имя")
+b = tk.Button(text="Начать игру")
+beg.pack()
+e.pack()
+b.pack()
 
 
 class ball():
@@ -175,10 +181,10 @@ g1 = gun()
 bullet = 0
 balls = []
 new_game_b=tk.Button(text="Играть заново")
-new_game_b.pack()
+
 quit = tk.Button(text="Выход")
 quit1 = tk.Button(text="Выход")
-quit.pack()
+
 
 
 def new_game():
@@ -247,7 +253,7 @@ def new_game_button(event):
 def quitf(event):
     F=open("Highscore1.txt","a")
     F.write("\n")
-    F.write("Player")
+    F.write(name)
     F.write(" - ")
     r=str(t1.points+t2.points)
     F.write(r)
@@ -262,10 +268,20 @@ def quitf(event):
     quit1.pack()
 def final_quit(event):
     root.destroy()
+def start(event):
+    global name
+    name=e.get()
+    beg.destroy()
+    e.destroy()
+    b.destroy()
+    canv.pack(fill=tk.BOTH, expand=1)
+    new_game_b.pack()
+    quit.pack()
+    new_game()
 new_game_b.bind('<Button-1>',new_game_button)
 quit.bind('<Button-1>',quitf)
 quit1.bind('<Button-1>',final_quit)
-new_game()
+b.bind('<Button-1>',start)
 
 
 tk.mainloop()
